@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup - Arms Database</title>
+    <!-- Add your CSS styles here -->
+    <style>
+        /* Add your CSS styles for error messages here */
+        .error-message {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Signup</h1>
+        <div id="error-message" class="error-message"></div>
+        <form id="signup-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <input type="submit" value="Signup">
+        </form>
+        <div class="login-link">
+            <a href="login.html">Already have an account? Login here</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            var username = document.getElementById('username').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var password = document.getElementById('password').value.trim();
+            var errorMessage = '';
+
+            // Validate username
+            if (username.length < 3) {
+                errorMessage += "Username must be at least 3 characters long.<br>";
+            }
+
+            // Validate email
+            if (!isValidEmail(email)) {
+                errorMessage += "Please enter a valid email address.<br>";
+            }
+
+            // Validate password
+            if (password.length < 6) {
+                errorMessage += "Password must be at least 6 characters long.<br>";
+            }
+
+            // Display error message if any
+            if (errorMessage) {
+                document.getElementById('error-message').innerHTML = errorMessage;
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+
+        function isValidEmail(email) {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    </script>
+</body>
+</html>
